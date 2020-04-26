@@ -27,8 +27,10 @@ def remove_noise(img, kernel_size):
 def mask_image(img, vertices):
     # Mask out the pixels outside the region defined in vertices (set the color to black)
 
+def hough_transform(# to be determined):
+    # Apply Hough transform to find the lanes
 
-#main part
+# main part
 
 #1 read the image
 #2 convert to HSV
