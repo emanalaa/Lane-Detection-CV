@@ -216,7 +216,7 @@ def hough_transform():
 
 
 def read_image(img_path):
-    img = Image.open(img_path)
+    img = mpimg.imread(img_path)
     return img
 
 
@@ -261,20 +261,20 @@ def main():
     # 4.1 Threshold HSV for Yellow
     lower = np.uint8([10,   0, 200])
     upper = np.uint8([40, 255, 255])
-    yellow_mask = color_thresholding(hsv, lower, upper)
+    yellow_mask = color_thresholding(HSV_img, lower, upper)
 
     # 4.1 Threshold HSV for White
     lower = np.uint8([  0,   0, 200])
     upper = np.uint8([255, 55, 255])
-    white_mask = color_thresholding(hsv, lower, upper)
+    white_mask = color_thresholding(HSV_img, lower, upper)
 
     # 4.1 Combine the resuls together
     mask = cv2.bitwise_or(white_mask, yellow_mask)
     
     # 5. Mask the gray image using the threshold output from step 4
     #I'm not sure about which masking they're asking for TBH
-    masked_gray_img = np.zeros(input_img.shape)
-    cv2.bitwise_and(input_img, masked_gray_img, mask = mask)
+    masked_gray_img = np.zeros(gray_img.shape)
+    cv2.bitwise_and(gray_img, masked_gray_img, mask = mask)
     
     # 6. Apply noise remove (gaussian) to the masked gray image
     masked_gray_img = remove_noise(masked_gray_img, 3)
