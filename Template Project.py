@@ -25,13 +25,7 @@ def draw_lines_connected(img, lines, color=[255, 0, 0], thickness=8):
 
 def convert_rbg_to_grayscale(img):
     # This function will do color transform from RGB to Gray
-
-    # Using built in function
-    return np.asarray(img.convert('L'), dtype=int)
-
-    # Using plt and a formula
-    #img = np.asarray(img, dtype=int)
-    #return np.dot(img[:,:,:3], [0.2989, 0.5870, 0.1140])
+    return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 
 def convert_rgb_to_hsv(img):
@@ -290,9 +284,10 @@ def hough_test():
     return
 
 def read_image(img_path):
-    img = Image.open(img_path)
-    img = img.convert("L")
-    img = np.asarray(img, dtype=int)
+    img = mpimg.imread('lanes_test.jpg')
+    #img = Image.open(img_path)
+    #img = img.convert("L")
+    #img = np.asarray(img, dtype=int)
     return img
 
 
@@ -304,7 +299,7 @@ def read_video(vid_path):
 def color_thresholding(img, low_threshold, high_threshold):
     # define the fixed values of the pixels
     strong = 255
-    outimg = np.zeros(img.shape)
+    outimg = np.zeros((img.shape[0],img.shape[1]))
 
     # extract the indices of the pixels per condition for each channel
     in_i, in_j, in_ch = np.where((low_threshold <= img & (img <= high_threshold)))
@@ -326,7 +321,6 @@ def main():
 
     # 1. read the image
     input_img = read_image('lanes_test.jpg')
-
     # 2. convert to HSV
     HSV_img = convert_rgb_to_hsv(input_img)
 
@@ -349,22 +343,23 @@ def main():
     mask = cv2.bitwise_or(white_mask, yellow_mask)
 
     # 5. Mask the gray image using the threshold output from step 4
-    # I'm not sure about which masking they're asking for TBH
-    masked_gray_img = np.zeros(gray_img.shape)
-    cv2.bitwise_and(gray_img, masked_gray_img, mask=mask)
+    #masked_gray_img = mask_image(gray_img, mask)
 
     # 6. Apply noise remove (gaussian) to the masked gray image
-    masked_gray_img = remove_noise(masked_gray_img, 3)
+    #masked_gray_img = remove_noise(masked_gray_img, 3)
 
     # 7. use canny detector and fine tune the thresholds (low and high values)
-    canny_out_img = detect_edges_canny(masked_gray_img, low_threshold=2, high_threshold=50)
+    #canny_out_img = detect_edges_canny(masked_gray_img, low_threshold=2, high_threshold=50)
 
     # 8. mask the image using the canny detector output
 
+
     # 9. apply hough transform to find the lanes
 
+    
     # 10. apply the pipeline you developed to the challenge videos
 
+    
     # 11 You should submit your code
 
 
