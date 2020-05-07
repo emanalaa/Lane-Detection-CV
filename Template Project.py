@@ -349,6 +349,7 @@ def main():
     #masked_gray_img = remove_noise(masked_gray_img, 3)
 
     # 7. use canny detector and fine tune the thresholds (low and high values)
+    # TODO: masked_gray_img should be of data-type numpy.ndarray
     #canny_out_img = detect_edges_canny(masked_gray_img, low_threshold=2, high_threshold=50)
 
     # 8. mask the image using the canny detector output
