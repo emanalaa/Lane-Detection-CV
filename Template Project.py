@@ -12,10 +12,12 @@ import cv2
 
 team_members_names = ['إسراء ياسر ابوالقاسم',
                       'منة محيي الدين محمود',
-                      'ميرنا محمد يسري']
+                      'ميرنا محمد يسري',
+                      'منة الله مصطفى مصطفى عوض']
 team_members_seatnumbers = ['2016170080',
                             '2016170438',
-                            '2016170450']
+                            '2016170450',
+                            '2016170437']
 
 
 def draw_lines_connected(img, lines, color=[255, 0, 0], thickness=8):
@@ -207,12 +209,32 @@ def detect_edges_canny(img, low_threshold, high_threshold):
 
 def remove_noise(img, kernel_size):
     # You should implement Gaussian Noise Removal Here
-    return
+    #Mean_filter
+    height = img.shape(0)
+    width = img.shape(1)
+    final_image = img.copy()
+    mask_one_dim = math.sqrt(kernel_size)
+    offset = mask_one_dim // 2
+    for i in range(offset, height - offset):
+        for j in range(offset, width - offset):
+            sum = 0
+            for r in range(i - offset, i + offset + 1):
+                for c in range(j - offset, j + offset + 1):
+                    sum += img[r][c]
+            final_image[i][j] = sum // kernel_size
+    return final_image
+
 
 
 def mask_image(img, vertices):
     # Mask out the pixels outside the region defined in vertices (set the color to black)
-    return
+    height = img.shape(0)
+    width = img.shape(1)
+    for i in range(0, height):
+        for j in range(0, width):
+            if vertices[i][j] == 0:
+                img[i][j] = 0
+    return img
 
 
 # Apply Hough transform to find the lanes
