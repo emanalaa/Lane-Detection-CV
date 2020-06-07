@@ -35,7 +35,6 @@ def convert_rgb_to_hsv(img):
     return cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
 
-
 def gaussian_kernel(sigma=0.5):
     # Specify the kernel size
     if sigma > 1:
@@ -172,7 +171,14 @@ def plotting(img, fig_num, title):
     return
 
 
-def detect_edges_canny(img, low_threshold, high_threshold):
+def detect_edges_canny(img, low_threshold=2, high_threshold=50):
+    """
+    Arguments:
+        :param img: np.ndarray((height, width)), gray-image
+        :param low_threshold: an integer
+        :param high_threshold: an integer
+    :return: edges image
+    """
     img = img.copy()
 
     # 1. Noise reduction
@@ -217,7 +223,6 @@ def remove_noise(img, kernel_size):
                     sum += img[r][c]
             final_image[i][j] = sum // kernel_size
     return final_image
-
 
 
 def mask_image(img, vertices):
